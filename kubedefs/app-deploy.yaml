@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vproapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vproapp
+  template:
+    metadata:
+      labels:
+        app: vproapp
+    spec:
+      initContainers:
+      - name: wait-for-mysql
+        image: busybox
+        command: ['sh', '-c', 'until nslookup vprodb.default.svc.cluster.local; do echo waiting for mysql; sleep 2; done']
+      - name: wait-for-memcache
+        image: busybox
+        command: ['sh', '-c', 'until nslookup vprocache01.default.svc.cluster.local; do echo waiting for memcache; sleep 2; done']
+      - name: wait-for-rabbitmq
+        image: busybox
+        command: ['sh', '-c', 'until nslookup vpromq01.default.svc.cluster.local; do echo waiting for rabbitmq; sleep 2; done']
+      containers:
+      - name: vproapp
+        image: techdecipher/simpledecipher-app
+        ports:
+        - containerPort: 8080
+
