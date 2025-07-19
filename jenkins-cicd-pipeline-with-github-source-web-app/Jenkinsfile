@@ -3,13 +3,13 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub') // uses Jenkins credentials ID
-        DOCKER_IMAGE = 'yourdockerhubusername/html-docker-site'
+        DOCKER_IMAGE = 'techdecipher/html-docker-site'
     }
 
     stages {
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/yourusername/html-docker-demo.git'
+                git 'https://github.com/techdecipher/Projects'
             }
         }
 
