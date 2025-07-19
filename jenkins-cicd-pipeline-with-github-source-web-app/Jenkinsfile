@@ -15,12 +15,13 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                script {
-		    // Show current directory and list files (for debugging)
-                    sh 'pwd'
-                    sh 'ls -lah'
-                    // Build the docker image
-                    dockerImage = docker.build("${DOCKER_IMAGE}:latest")
+	           dir('jenkins-cicd-pipeline-with-github-source-web-app')
+                     script {
+		       // Show current directory and list files (for debugging)
+                       sh 'pwd'
+                       sh 'ls -lah'
+                      //Build the docker image
+                      dockerImage = docker.build("${DOCKER_IMAGE}:latest")
                 }
             }
         }
