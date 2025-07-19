@@ -15,16 +15,19 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-	           dir('jenkins-cicd-pipeline-with-github-source-web-app')
-                     script {
+	           dir('jenkins-cicd-pipeline-with-github-source-web-app') {
 		       // Show current directory and list files (for debugging)
                        sh 'pwd'
                        sh 'ls -lah'
-                      //Build the docker image
+                       //Build the docker image
+
+                     script {
                       dockerImage = docker.build("${DOCKER_IMAGE}:latest")
                 }
-            }
-        }
+	     }
+
+         }   
+     }
 
         stage('Push to Docker Hub') {
             steps {
